@@ -1,0 +1,44 @@
+version: "3"
+services:
+  caddy:
+    image: abiosoft/caddy
+    container_name: caddy
+    hostname: caddy
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - "80:80"
+      - "443:443"
+      - "3000:3000"
+      - "2023:2023"
+      - "2024:2024"
+      - "8126:8126"
+      - "2003:2003"
+      - "8125:8125"
+      - "8083:8083"
+      - "8082:8082"
+      - "8125:8125"
+      - "90:80"
+      - "25826:25826"
+      - "8086:8086"
+      - "8090:8090"
+      - "8094:8094"
+      - "9090:9090"
+      - "9103:9103"
+      - "9100:9100"
+    environment:
+      - CADDYPATH=/etc/caddycerts
+      - IP=
+      - DOMAIN=
+      - EMAIL=
+      - CF_API_TOKEN=
+    volumes:
+      - /opt/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - /opt/docker/caddy/data:/data
+      - /opt/docker/caddy/config:/config
+      - /opt/docker/caddy/config/certs:/etc/caddycerts
+
+  networks:
+    default:
+      external:
+        name: $DOCKER_MY_NETWORK
