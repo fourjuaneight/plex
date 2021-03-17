@@ -1,0 +1,19 @@
+media.{$DOMAIN} {
+  encode zstd gzip
+
+  reverse_proxy {$IP}:32400
+
+  header {
+    -x-powered-by
+    Strict-Transport-Security "max-age=31536000;"
+    X-Content-Type-Options    "nosniff"
+    X-XSS-Protection          "1; mode=block"
+    X-Frame-Options           "SAMEORIGIN"
+    Referrer-Policy           "strict-origin-when-cross-origin"
+    Content-Security-Policy   "frame-src 'self'; frame-ancestors 'self'; object-src 'none';"
+  }
+
+  tls {$EMAIL} {
+    dns cloudflare {$CF_API_KEY}
+  }
+}
