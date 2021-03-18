@@ -9,23 +9,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "3000:3000"
-      - "2023:2023"
-      - "2024:2024"
-      - "8126:8126"
-      - "2003:2003"
-      - "8125:8125"
-      - "8083:8083"
-      - "8082:8082"
-      - "8125:8125"
-      - "90:80"
-      - "25826:25826"
-      - "8086:8086"
-      - "8090:8090"
-      - "8094:8094"
-      - "9090:9090"
-      - "9103:9103"
-      - "9100:9100"
     environment:
       - CADDYPATH=/etc/caddycerts
       - IP=
@@ -37,7 +20,20 @@ services:
       - /opt/docker/caddy/data:/data
       - /opt/docker/caddy/config:/config
       - /opt/docker/caddy/config/certs:/etc/caddycerts
-
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
+    hostname: plex
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - /opt/docker/plex/config/plex:/config
+      - /opt/docker/plex/transcode:/transcode
+      - /opt/docker/plex/storage:/data
   networks:
     default:
       external:
